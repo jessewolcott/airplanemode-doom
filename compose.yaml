@@ -1,0 +1,14 @@
+# Standalone development: Doom plus Drop (built from ../airplanemode-drop).
+#   docker compose up -d --build      ->  Doom http://localhost:8771, Drop http://localhost:8766
+# Standalone, the page finds Drop at ../drop/, which only exists behind the platform's proxy;
+# use the platform dev stack (compose.dev.yaml there) to try the Drop integration.
+# On the box, Doom runs from the airplanemode platform repo at /doom/.
+
+name: doom-dev
+
+services:
+  doom:
+    build: .
+    ports:
+      - "${PORT:-8771}:8000"
+    mem_limit: 32m

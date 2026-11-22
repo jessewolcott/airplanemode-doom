@@ -1,0 +1,8 @@
+.git
+.github
+docs
+build
+preview
+**/__pycache__
+*.wad
+llm

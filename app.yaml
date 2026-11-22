@@ -1,0 +1,15 @@
+# AirplaneMode app manifest. See the platform repo: docs/app-contract.md
+id: doom
+name: Doom
+description: Classic first-person shooter that runs in your browser with touch controls. Freedoom, the Layover airport episode, or your own WADs from Drop.
+image: ghcr.io/jessewolcott/airplanemode-doom
+port: 8000
+path: /doom/
+memory: 32m           # static files only (busybox httpd); the game runs in the browser
+needs:
+  llm: none
+  apps: [drop]        # optional: lists .wad files in Drop and plays them
+opens:
+  from: drop
+  types: [application/x-doom-wad]
+  url: /doom/#drop={id}

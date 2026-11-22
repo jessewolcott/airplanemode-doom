@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+# build output (the image builds these)
+*.wad
+build/
+preview/
+# Local "how it is built" notes for LLMs and engineers; not published.
+llm/

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Doom">
+<meta name="theme-color" content="#120b0b">
+<title>Doom</title>
+<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main id="launcher">
+  <header>
+    <img src="icon.svg" alt="" width="40" height="40">
+    <div>
+      <h1>Doom</h1>
+      <p>Runs on your device. Touch, keyboard or gamepad.</p>
+    </div>
+    <a class="home" href="../">AirplaneMode</a>
+  </header>
+
+  <section>
+    <h2>Games</h2>
+    <div id="games" class="cards"></div>
+  </section>
+
+  <section id="drop-section" hidden>
+    <h2>Your WADs from Drop</h2>
+    <div id="drop-games" class="cards"></div>
+  </section>
+  <p id="drop-hint" class="hint" hidden>Have your own <b>DOOM.WAD</b>, <b>DOOM2.WAD</b> or a mod? Put the
+    <code>.wad</code> file in <a href="../drop/">Drop</a> and it shows up here.</p>
+
+  <details class="help">
+    <summary>How to play</summary>
+    <div class="help-body">
+      <h3>Touch</h3>
+      <ul>
+        <li><b>Left thumb</b>: move. Push further to run.</li>
+        <li><b>Right thumb</b>: drag anywhere to turn (dragging from Fire turns while you shoot).</li>
+        <li><b>Use</b> opens doors and presses switches. <b>&lsaquo; &rsaquo;</b> change weapon,
+          <b>Map</b> shows the map, <b>&#9776;</b> opens the menu (save, load, quit).</li>
+        <li>In menus: the arrows, <b>OK</b> and <b>Back</b>. Turn the phone sideways.</li>
+      </ul>
+      <h3>Keyboard and mouse</h3>
+      <p>Click the game to capture the mouse. <b>WASD</b> move, mouse turns, <b>click</b> or
+        <b>Ctrl</b> fires, <b>Space</b> uses, <b>Esc</b> menu, <b>Tab</b> map, <b>1-7</b> weapons.</p>
+      <h3>Gamepad</h3>
+      <p>Pair it with the device first; press a button once the game is running.</p>
+      <h3>Saves</h3>
+      <p>Saved games stay in this browser on this device.</p>
+    </div>
+  </details>
+
+  <div class="settings">
+    <label>Turn speed <input id="sens" type="range" min="1" max="20" step="1"></label>
+    <label>Sharpness
+      <select id="res">
+        <option value="300">Fast</option>
+        <option value="400">Balanced</option>
+        <option value="600">Sharp</option>
+      </select>
+    </label>
+    <label><input id="lefty" type="checkbox"> Left-handed</label>
+  </div>
+
+  <footer>
+    Engine: <a href="https://github.com/coelckers/prboom-plus">PrBoom+</a> 2.6.66 (GPL-2.0).
+    Game data: <a href="https://freedoom.github.io/">Freedoom</a> (BSD), <a href="wads/COPYING.txt">licence</a>,
+    <a href="wads/CREDITS-freedoom.txt">credits</a>. Layover: made for AirplaneMode.
+    Doom is a trademark of id Software; this app is not affiliated with id.
+  </footer>
+</main>
+
+<div id="loading" hidden>
+  <p id="loading-title"></p>
+  <div class="bar"><i id="loading-bar"></i></div>
+  <p id="loading-text">Getting ready...</p>
+</div>
+
+<div id="game" hidden>
+  <canvas id="canvas" tabindex="-1"></canvas>
+  <div id="touch" hidden>
+    <div id="look" class="zone"></div>
+    <div id="move" class="zone"><div id="stick"><i></i></div></div>
+    <div class="play-ui">
+      <button class="btn top" data-key="esc" id="b-menu" aria-label="Menu">&#9776;</button>
+      <button class="btn top" data-key="map" id="b-map">Map</button>
+      <button class="btn" data-key="prevweapon" id="b-prev" aria-label="Previous weapon">&lsaquo;</button>
+      <button class="btn" data-key="nextweapon" id="b-next" aria-label="Next weapon">&rsaquo;</button>
+      <button class="btn" data-key="use" id="b-use">Use</button>
+      <button class="btn fire" data-key="fire" id="b-fire" data-look="1">Fire</button>
+    </div>
+    <div class="menu-ui">
+      <div class="dpad">
+        <button class="btn" data-key="up" aria-label="Up">&#9650;</button>
+        <button class="btn" data-key="left" aria-label="Left">&#9664;</button>
+        <button class="btn" data-key="right" aria-label="Right">&#9654;</button>
+        <button class="btn" data-key="down" aria-label="Down">&#9660;</button>
+      </div>
+      <div class="menu-keys">
+        <button class="btn yn" data-key="y">Yes</button>
+        <button class="btn yn" data-key="n">No</button>
+        <button class="btn" data-key="backspace">Back</button>
+        <button class="btn ok" data-key="enter">OK</button>
+      </div>
+      <button class="btn top" data-key="esc" id="b-close">Close</button>
+    </div>
+    <div class="skip-ui">Tap to continue</div>
+  </div>
+  <div id="rotate">Turn your phone sideways for the best view.</div>
+</div>
+
+<div id="error" hidden>
+  <h2>That didn't work</h2>
+  <p id="error-text"></p>
+  <pre id="error-log"></pre>
+  <button onclick="location.href=location.pathname">Back to games</button>
+</div>
+
+<script src="app.js"></script>
+<script src="touch.js"></script>
+</body>
+</html>

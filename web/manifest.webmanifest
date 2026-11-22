@@ -1,0 +1,11 @@
+{
+  "name": "Doom on AirplaneMode",
+  "short_name": "Doom",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#120b0b",
+  "theme_color": "#120b0b",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
