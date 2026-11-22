@@ -59,5 +59,4 @@ Look at `build/preview/mapNN.png` after changing a map, and refresh `docs/maps/`
 ## Releasing
 
 Push a `vX.Y.Z` tag. CI tests, then publishes `ghcr.io/jessewolcott/airplanemode-doom:X.Y.Z`
-(arm64 + amd64). **Ask Jesse before pushing a release tag.** Not released yet; the platform's
-`compose.yaml` pins 0.1.0.
+(arm64 + amd64). **Ask Jesse before pushing a release tag.** Released: 0.1.0.
