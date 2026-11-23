@@ -7,6 +7,18 @@ settings, footer with licences), `#loading` (title, bar, text), `#game` (`#canva
 overlay + `#rotate` portrait hint), `#error` (message + last 30 log lines + "Back to games",
 an inline `onclick` that reloads without the hash). Scripts: `app.js` then `touch.js`.
 
+**Home button** (platform app contract item 10): `a.am-home` (house icon, `href="../"`) at the
+right end of the launcher's `<header>` (it replaced the old "AirplaneMode" text link), and a
+second one, `#am-home-float.am-home.float`, after `#error`: `position: fixed` top right (safe-area
+insets), shown by CSS on every screen except the launcher (`#launcher:not([hidden]) ~ ...`).
+While `#game` shows it is see-through (opacity 0.55, 18 px icon) but still 44 x 44 px. It sits
+outside `#touch`, so touch.js never sees taps on it. Left-handed mode moves ☰ and Map left by
+56 px to keep the top right corner free. `bindHome()` in app.js stops its mouse/pointer/touch/key
+events from reaching the engine's document listeners (no stray key or pointer-lock request) and,
+mid-game, asks `confirm` first (only saved games survive a reload), then `am_save_config()` +
+`saveNow()` before leaving. With the mouse captured, Esc releases pointer lock and the button is
+clickable; SDL eats Tab during play, so keyboard focus can't reach it then (untested on phones).
+
 `#touch` contains three control groups; CSS shows one depending on the class set by
 `touch.js`: `.play` (move zone, look zone, buttons ☰ Map ‹ › Use Fire), `.menu` (D-pad, OK,
 Back, Close, plus Yes/No when `.question`), `.skip` ("Tap to continue", any tap = Enter).
@@ -63,6 +75,7 @@ touch.js's `KEY` table (tested).
 
 ## style.css
 
-Dark tokens on `:root` (`--bg #120b0b`, `--accent #e0472b`, `--accent-2 #f2b134`). The game
+Dark tokens on `:root` (`--bg #120b0b`, `--accent #e0472b`, `--accent-2 #f2b134`; the home
+button uses `--panel`/`--line`, `--accent-2` for hover and its focus ring). The game
 uses safe-area insets. Portrait on touch devices: canvas at 56% height, top-aligned, with the
 rotate hint below it.

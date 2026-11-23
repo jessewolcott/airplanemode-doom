@@ -40,6 +40,19 @@ class Page(unittest.TestCase):
                 bad.append(f"{name}: {m.group(0)}")
         self.assertEqual(bad, [])
 
+    def test_home_button(self):
+        # app contract item 10: the AirplaneMode home button, in the launcher's header and
+        # floating over the loading, game and error screens; no old text link
+        html = self.files["index.html"]
+        links = re.findall(r'<a class="am-home[^"]*"[^>]*>', html)
+        self.assertEqual(len(links), 2, links)
+        for a in links:
+            self.assertIn('href="../"', a)
+            self.assertIn('aria-label="AirplaneMode home"', a)
+        self.assertRegex(html, r'(?s)<header>.*<a class="am-home" href="\.\./".*</header>')
+        self.assertNotIn('class="home"', html)
+        self.assertIn(".am-home:focus-visible", self.files["style.css"])
+
     def test_touch_key_codes(self):
         js = self.files["touch.js"]
         expect = {

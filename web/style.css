@@ -21,7 +21,25 @@ a { color: var(--accent-2); }
 header { display: flex; align-items: center; gap: 12px; margin: 8px 0 20px; }
 header h1 { margin: 0; font-size: 1.6rem; letter-spacing: 0.02em; }
 header p { margin: 0; color: var(--dim); font-size: 0.9rem; }
-header .home { margin-left: auto; font-size: 0.9rem; white-space: nowrap; }
+
+/* AirplaneMode home button (app contract item 10): header's right end on the launcher,
+   fixed top right on the loading, game and error screens. */
+.am-home { display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 44px; height: 44px; border-radius: 10px; color: var(--text); background: var(--panel);
+  border: 1px solid var(--line); text-decoration: none; -webkit-tap-highlight-color: transparent; }
+.am-home:hover { color: var(--accent-2); border-color: var(--accent-2); }
+.am-home:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 2px; }
+header .am-home { margin-left: auto; }
+.am-home.float { position: fixed; z-index: 20; top: max(10px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right)); }
+#launcher:not([hidden]) ~ .am-home.float { display: none; }
+/* while playing: small and see-through so it doesn't hide the picture, still 44 px to tap
+   (left of it nothing: the touch menu/map buttons sit top left, or move over in left-handed mode) */
+#game:not([hidden]) ~ .am-home.float { background: rgba(0, 0, 0, 0.35); border-color: rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.8); opacity: 0.55; }
+#game:not([hidden]) ~ .am-home.float svg { width: 18px; height: 18px; }
+#game:not([hidden]) ~ .am-home.float:hover, #game:not([hidden]) ~ .am-home.float:focus-visible { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) { .am-home { transition: opacity 0.15s, color 0.15s; } }
 h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin: 24px 0 10px; }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px;
@@ -118,8 +136,9 @@ footer { margin-top: 28px; color: var(--dim); font-size: 0.78rem; }
 #touch.lefty #b-use { right: auto; left: calc(max(24px, env(safe-area-inset-left)) + 104px); }
 #touch.lefty #b-next { right: auto; left: calc(max(30px, env(safe-area-inset-left)) + 70px); }
 #touch.lefty #b-prev { right: auto; left: max(30px, env(safe-area-inset-left)); }
-#touch.lefty #b-menu { left: auto; right: max(12px, env(safe-area-inset-right)); }
-#touch.lefty #b-map { left: auto; right: calc(max(12px, env(safe-area-inset-right)) + 62px); }
+/* ...but the top right corner belongs to the home button, so the menu and map sit left of it */
+#touch.lefty #b-menu { left: auto; right: calc(max(12px, env(safe-area-inset-right)) + 56px); }
+#touch.lefty #b-map { left: auto; right: calc(max(12px, env(safe-area-inset-right)) + 118px); }
 
 #rotate { display: none; }
 @media (orientation: portrait) and (pointer: coarse) {

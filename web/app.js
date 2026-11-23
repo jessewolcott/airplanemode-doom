@@ -320,8 +320,29 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
+// ---------------------------------------------------------------- home button
+// The game in progress lives only in this tab's memory (saved games survive, the level you're
+// in doesn't), so leaving mid-game asks first, then writes settings and saves before going.
+// The button sits outside the canvas and #touch; its events stop here so the engine's
+// document listeners don't take the tap as a key or a pointer-lock request.
+function bindHome() {
+  const a = $("#am-home-float");
+  for (const ev of ["mousedown", "mouseup", "pointerdown", "pointerup", "touchstart", "touchend", "keydown", "keyup"]) {
+    a.addEventListener(ev, (e) => e.stopPropagation());
+  }
+  a.addEventListener("click", (e) => {
+    if ($("#game").hidden || !window.Module || !Module.FS) return;   // loading or error: just go
+    e.preventDefault();
+    if (document.pointerLockElement) document.exitPointerLock();
+    if (!confirm("Leave the game? Anything since your last save is lost.")) return;
+    try { if (Module._am_save_config) Module._am_save_config(); } catch { /* engine stopped */ }
+    saveNow().finally(() => { location.href = a.href; });
+  });
+}
+
 // ---------------------------------------------------------------- start
 bindSettings();
+bindHome();
 renderBundled();
 loadManifest();
 renderDrop().then(openFromHash);
