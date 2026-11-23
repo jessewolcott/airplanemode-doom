@@ -19,7 +19,7 @@ Part of AirplaneMode: the platform repo is `../airplanemode` (read its `CLAUDE.m
 - `web/`: `index.html` (launcher + game), `app.js` (downloads, Drop WADs, IDBFS, starts the
   engine), `touch.js` (touch controls), `style.css`.
 - `tools/manifest.py` (file sizes for the progress bar), `tools/test_web.py`.
-- `llm/` (local, git-ignored): detailed notes on the engine, page, map kit and each map.
+- `llm/` (kept out of the image by `.dockerignore`): detailed notes on the engine, page, map kit and each map.
 
 ## Commands
 
