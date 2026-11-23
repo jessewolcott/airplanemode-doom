@@ -6,5 +6,3 @@ __pycache__/
 *.wad
 build/
 preview/
-# Local "how it is built" notes for LLMs and engineers; not published.
-llm/
