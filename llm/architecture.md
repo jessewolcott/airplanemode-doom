@@ -32,7 +32,7 @@ browsers revalidate rather than re-download.
 
 ## In the platform
 
-- `compose.yaml`: service `doom`, image `ghcr.io/jessewolcott/airplanemode-doom:0.1.0`,
+- `compose.yaml`: service `doom`, image `ghcr.io/jessewolcott/airplanemode-doom:0.1.1`,
   `mem_limit: ${DOOM_MEM:-32m}`, no volume, no env. `compose.dev.yaml` builds `../airplanemode-doom`.
 - `Caddyfile`: `redir /doom /doom/` + `handle_path /doom/* { reverse_proxy doom:8000 }`.
 - `portal/apps.json`: entry `doom` (category Games, icon `/icons/doom.svg`) with

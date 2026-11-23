@@ -17,7 +17,9 @@ The Docker `wad` stage runs it with freedoom2.wad.
 
 `tools/test_web.py`: no root-relative `src`/`href`/`fetch`/`url()`; nothing loaded from
 `http(s)://`; touch key codes match PrBoom+ defaults; every `data-key` exists in `KEY`;
-default cfg has the weapon keys and opl2.
+default cfg has the weapon keys and opl2; two `a.am-home` links (`href="../"`,
+`aria-label="AirplaneMode home"`), one inside the launcher's `<header>`, no old `class="home"`
+link, and `style.css` has `.am-home:focus-visible`.
 
 ## Manual checks done for 0.1.0 (desktop Chromium via Playwright)
 
@@ -48,4 +50,4 @@ on mid-range phones, gamepads. The platform's `docs/testing.md` has the on-devic
 Ask Jesse first (tags publish images). Push `vX.Y.Z` -> CI publishes
 `ghcr.io/jessewolcott/airplanemode-doom:X.Y.Z` (arm64+amd64). Then in `../airplanemode`:
 bump the pin in `compose.yaml`; the platform CI checks the image has arm64. Released: 0.1.0
-(2026-11-22). Drop 0.2.1 was released alongside for Play in Doom.
+(2026-11-22; Drop 0.2.1 was released alongside for Play in Doom), 0.1.1 (home button).
